@@ -2,26 +2,26 @@
 
 ## 4.1 마이크로서비스 아키텍처에서의 트랜잭션 관리
 
-<img src="./img/1.jpg" alt="" width="500" />
+<img src="img.jpg" alt="" width="500" />
 
 ### 사가
 
 - 비동기 메세징을 이용한 일련의 로컬 트랜잭션
 - 여러 서비스의 데이터를 업데이트하는 시스템 커맨드마다 사가를 하나씩 정의
 
-<img src="./img/2.jpg" alt="" width="500" />
+<img src="img.jpg" alt="" width="500" />
 
 - 메시지를 통해 사가 참여자를 느슨하게 결합 & 사가가 반드시 완료되도록 보장
 
 #### 사가는 보상 트랜잭션으로 변경분을 롤백한다
 
-<img src="./img/3.jpg" alt="" width="500" />
+<img src="img.jpg" alt="" width="500" />
 
 - 사가는 단계마다 로컬 DB에 변경분을 커밋하기에 자동 롤백 불가능
 - 4번째 단계에서 실패하면 1~3번째 단계에서 적용된 commit undo &rarr; 보상 트랜잭션(= compensating transaction)<br>
 &rArr; (n + 1) 사가 트랜잭션이 실패하면 이전 n개의 트랜잭션 undo
 
-<img src="./img/4.jpg" alt="" width="500" />
+<img src="img.jpg" alt="" width="500" />
 
 - 1~3번째 단계 = `보상 트랜잭션` &rarr; 실패할 가능성이 있는 다음 단계에 있음
 - 4번째 단계 = `피봇 트랜잭션` &rarr; 절대로 실패하지 않는 단계
@@ -34,7 +34,7 @@
 
 ### 4.2.1 코레오그래피 사가
 
-<img src="./img/5.jpg" alt="" width="500" />
+<img src="img.jpg" alt="" width="500" />
 
 - 사가 참여자가 서로 이벤트 소통
 - 각 참여자가 자신 DB 업데이트 후 다음 참여자 트리거하는 이벤트 발행
@@ -51,13 +51,13 @@
 
 > 사가 오케스트레이터가 비동기 요청/응답을 주고 받으며 사가 참여자를 호출하고 처리 과정에 따라 커맨드 메시지 전송
 
-<img src="./img/6.jpg" alt="" width="500" />
+<img src="img.jpg" alt="" width="500" />
 
 #### 사가 오케스트레이터를 상태 기계로 모델링
 
 > 상태 기계 &rarr; 상태 + 이벤트에 의해 트리거되는 상태 전이
 
-<img src="./img/7.jpg" alt="" width="450" />
+<img src="img.jpg" alt="" width="450" />
 
 - 티켓 생성 상태 &rarr; 신용카드 승인, 주문 거부 상태로 전이
 - 다양한 응답에 따라 다양한 상태 전이를 거치면서 결국 주문 승인, 거부 상태 중 한쪽으로 귀결
@@ -111,11 +111,11 @@
 - `피봇 트랜잭션`: 사가의 진행/중단 지점 &rarr; 피봇 트랜잭션이 커밋되면 사가는 완료될 때까지 실행
 - `재시도 가능 트랜잭션`: 반드시 성공하는 트랜잭션
 
-<img src="./img/8.jpg" alt="" width="500" />
+<img src="img.jpg" alt="" width="500" />
 
 ## 4.4 주문 서비스 및 주문 생성 사가 설계
 
-<img src="./img/9.jpg" alt="" width="500" />
+<img src="img.jpg" alt="" width="500" />
 
 ### 4.4.1 OrderService 클래스
 
@@ -123,7 +123,7 @@
 
 - `SagaManager`: CreateOrderSaga 사가 생성 &rarr; 사가 오케스트레이터와 참여자 작성 클래스
 
-<img src="./img/10.jpg" alt="" width="500" />
+<img src="img0.jpg" alt="" width="500" />
 
 ```java
 @Transactional
@@ -179,7 +179,7 @@ public class CreateOrderSagaState {
 
 #### 이벤추에이트 트램 사가 프레임워크
 
-<img src="./img/11.jpg" alt="" width="500">
+<img src="img1.jpg" alt="" width="500">
 
 1. OrderService &rarr; CreateOrderSagaState 생성
 2. OrderService &rarr; SagaManager를 호출하여 사가 인스턴스 생성
