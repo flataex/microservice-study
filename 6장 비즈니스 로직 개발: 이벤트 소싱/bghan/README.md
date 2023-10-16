@@ -49,7 +49,7 @@ order by event_id
 
 ```sql
 update events
-set publisehd = 1
+set published = 1
 where event_id = ${event_id}
 ```
 
